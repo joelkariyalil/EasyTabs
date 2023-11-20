@@ -54,8 +54,6 @@ function updateResults(results) {
         .catch(error => console.error('Error:', error));
 }
 
-// Rest of your code...
-
 
 chrome.tabs.query({}, function (tabs) {
     const tabResults = tabs.map(tab => `Title: ${tab.title} | URL: ${tab.url}`).join('\n');
