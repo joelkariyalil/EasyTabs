@@ -1,13 +1,32 @@
-<!-- popup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tab Monitor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup</title>
 </head>
 <body>
-  <h1>Tab Monitor</h1>
-  <pre id="results"></pre>
+    <div id="results"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Listen for the updateResults message from the background script
+            chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+                if (message.type === 'updateResults') {
+                    updatePopupContent(message.results);
+                }
+            });
+
+            function updatePopupContent(results) {
+                const resultsContainer = document.getElementById('results');
+
+                if (resultsContainer) {
+                    resultsContainer.innerText = 'Received tabs data: ' + JSON.stringify(results, null, 2);
+                } else {
+                    console.error('Results container not found.');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
