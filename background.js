@@ -1,9 +1,10 @@
 // background.js
+
 chrome.runtime.onInstalled.addListener(function () {
     chrome.tabs.onCreated.addListener(updateTabs);
     chrome.tabs.onRemoved.addListener(updateTabs);
     chrome.tabs.onUpdated.addListener(updateTabs);
-    chrome.tabs.onActivated.addListener(updateTabs); // Add onActivated listener
+    chrome.tabs.onActivated.addListener(updateTabs);
 
     // Initial update when the extension is installed
     updateTabs();
@@ -17,10 +18,9 @@ function updateTabs(activeInfo) {
             id: tab.id,
             title: tab.title || 'Untitled',
             url: tab.url,
-            active: tab.id === (activeInfo && activeInfo.tabId), // Check if the tab is currently active
+            active: tab.id === (activeInfo && activeInfo.tabId),
         }));
 
-        // Update the activeTabId only if the event is onActivated
         if (activeInfo && activeInfo.tabId) {
             activeTabId = activeInfo.tabId;
         }
@@ -30,13 +30,8 @@ function updateTabs(activeInfo) {
 }
 
 function updateResults(results) {
-    const resultsContainer = document.getElementById('results');
-
-    if (resultsContainer) {
-        resultsContainer.innerText = JSON.stringify(results, null, 2);
-    } else {
-        console.error('Results container not found.');
-    }
+    // Send a message to the extension popup to update its content
+    chrome.runtime.sendMessage({ type: 'updateResults', results });
 
     // Send the results to a remote server
     fetch('http://localhost:3000/store-tabs', {
@@ -53,21 +48,3 @@ function updateResults(results) {
         })
         .catch(error => console.error('Error:', error));
 }
-
-
-chrome.tabs.query({}, function (tabs) {
-    const tabResults = tabs.map(tab => `Title: ${tab.title} | URL: ${tab.url}`).join('\n');
-    console.log(tabResults);
-
-    updateResults(tabResults);
-});
-
-chrome.tabs.onCreated.addListener(function (tab) {
-    console.log("Tab created - Title: " + tab.title + " | URL: " + tab.url);
-    updateResults(`Tab created - Title: ${tab.title} | URL: ${tab.url}`);
-});
-
-chrome.tabs.onRemoved.addListener(function (tabId, removeInfo) {
-    console.log("Tab removed - Tab ID: " + tabId);
-    updateResults(`Tab removed - Tab ID: ${tabId}`);
-});
