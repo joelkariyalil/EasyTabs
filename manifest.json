@@ -1,7 +1,7 @@
 // manifest.json
 {
   "manifest_version": 2,
-  "name": "Tab Monitor",
+  "name": "Easy Tabs",
   "version": "1.0",
   "description": "Logs information about open tabs",
   "permissions": [ "tabs" ],
