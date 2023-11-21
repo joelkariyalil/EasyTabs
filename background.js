@@ -6,7 +6,6 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.tabs.onUpdated.addListener(updateTabs);
     chrome.tabs.onActivated.addListener(updateTabs);
 
-    // Initial update when the extension is installed
     updateTabs();
 });
 
