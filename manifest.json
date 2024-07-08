@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "GrafAI",
+  "version": "0.0.1",
+  "description": "Visually explore your open tabs with AI-powered grouping",
+  "permissions": [
+    "tabs" // Required to access information about open tabs
+  ],
+  "background": {
+    "service_worker": "background.js" // Script to handle tab data fetching and processing
+  },
+  "action": {
+    "default_popup": "popup.html" // Optional popup window for user interaction
+  }
+}

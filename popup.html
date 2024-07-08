@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Overview</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 10px;
+    }
+    .tab-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .tab-title {
+      flex-grow: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    button {
+      background: none;
+      border: none;
+      color: blue;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 0;
+      font: inherit;
+    }
+  </style>
+</head>
+<body>
+  <h1>Open Tabs Overview</h1>
+  <ul id="tab-list"></ul>
+  <script src="popup.js"></script>
+</body>
+</html>
